@@ -11,15 +11,17 @@ function App() {
   const [asset, setAsset] = useState('0x23581767a106ae21c074b2276d25e5c3e136a68b/2941')
 
   useEffect(() => {
-    axios.get(`https://api.opensea.io/api/v1/asset/${asset}/?include_orders=false`)
-      .then(res => {
+    const getData = async () => {
+      try {
+        const res = await axios.get(`https://api.opensea.io/api/v1/asset/${asset}/?include_orders=false`)
         setNft(res.data.image_url)
         console.log(res.data)
-      })
-      .catch(err => {
+      } catch (err) {
         console.log(err)
-      })
-  }, [asset]);
+      }
+    }
+    getData()
+  }, [asset])
 
   return (
     <div className='flex h-screen justify-center items-center bg-black scale-125'>
