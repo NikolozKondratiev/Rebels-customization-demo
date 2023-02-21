@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './App.css';
 import moonbird from './res/moonbird2.jpg';
@@ -9,6 +9,7 @@ function App() {
   const [patch, setPatch] = useState(moonbird);
   const [nft, setNft] = useState(moonbird);
   const [asset, setAsset] = useState('0x23581767a106ae21c074b2276d25e5c3e136a68b/2941')
+  const input = useRef();
 
   useEffect(() => {
     const getData = async () => {
@@ -22,6 +23,12 @@ function App() {
     }
     getData()
   }, [asset])
+    
+  const handleClick = (e) => {
+    e.preventDefault()
+    input.current.value = '';
+    setPatch(nft);
+  };
 
   return (
     <div className='flex h-screen justify-center items-center bg-black scale-125'>
@@ -51,8 +58,8 @@ function App() {
                   <LoopIcon className='text-orange-600 animate-spin rotate-180'/>
                 </div>
               }
-              <input onChange={(e) => setAsset(e.target.value)} type='text' placeholder='Asset Address...' className='h-8 bg-black border rounded-lg pl-2 text-sm font-mono text-orange-600 border-orange-600' />
-              <button onClick={() => setPatch(nft)} className='p-1 text-black text-sm font-mono rounded-lg h-8 bg-orange-600'>Confirm</button>
+              <input onChange={(e) => setAsset(e.target.value)} ref={input} type='text' placeholder='Asset Address...' className='h-8 bg-black border rounded-lg pl-2 text-sm font-mono text-orange-600 border-orange-600' />
+              <button onClick={handleClick} className='p-1 text-black text-sm font-mono rounded-lg h-8 bg-orange-600'>Confirm</button>
             </div>
           </div>
         </div>
